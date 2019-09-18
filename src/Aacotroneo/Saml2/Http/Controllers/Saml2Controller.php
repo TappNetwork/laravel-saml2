@@ -20,6 +20,10 @@ class Saml2Controller extends Controller
      */
     function __construct(){
         $idpName = request()->route('idpName');
+        if (app()->runningInConsole()) {
+            $idpName = config('saml2_settings.idpNames')[0];
+        }
+
         if (!in_array($idpName, config('saml2_settings.idpNames'))) {
             abort(404);
         }
